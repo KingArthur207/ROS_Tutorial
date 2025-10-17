@@ -32,7 +32,7 @@ class TutorialTopic_1_4_Service(Node):
         # TODO: Q1.4.b
         self.gate_side_information_service = self.create_service(
             ### STUDENT CODE HERE
-
+            GetBuoyLocation, '/tutorial/get_buoy_location', self.handle_get_buoy_location
             ### END STUDENT CODE
         )
     
@@ -42,7 +42,15 @@ class TutorialTopic_1_4_Service(Node):
         desired_buoy = request.buoy_name
         # TODO: Q1.4.c
         ### STUDENT CODE HERE
-
+        response.found = False
+        response.x_pos = 0.0
+        response.y_pos = 0.0
+        for index, row in self.tutorial_map.iterrows():
+            if row['type'] == desired_buoy:
+                response.x_pos = row['x_loc']
+                response.y_pos = row['y_loc']
+                response.found = True
+                break
         ### END STUDENT CODE
         return response
 
